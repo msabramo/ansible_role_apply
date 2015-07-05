@@ -5,12 +5,12 @@ import click
 
 
 @click.command()
-@click.option('--host', 'hosts', multiple=True)
-@click.option('--role', 'roles', multiple=True)
 @click.option('--sudo/--no-sudo', '-s')
 @click.option('--show-playbook/--no-show-playbook')
-def ansible_role_apply(hosts, roles, sudo, show_playbook):
-    playbook_content = get_playbook_content(hosts, roles, sudo)
+@click.argument('role')
+@click.argument('hosts')
+def ansible_role_apply(sudo, show_playbook, role, hosts):
+    playbook_content = get_playbook_content(role, hosts, sudo)
     if show_playbook:
         click.secho(79 * '-', fg='yellow')
         click.secho('#!/usr/bin/env ansible-playbook', fg='yellow')
@@ -35,9 +35,9 @@ def get_playbook_roles(roles):
     return playbook_roles
 
 
-def get_playbook_content(hosts, roles, sudo):
-    playbook_hosts = get_playbook_hosts(hosts)
-    playbook_roles = get_playbook_roles(roles)
+def get_playbook_content(role, hosts, sudo):
+    playbook_roles = get_playbook_roles([role])
+    playbook_hosts = get_playbook_hosts([hosts])
     playbook_content = """\
 ---
 - hosts:
