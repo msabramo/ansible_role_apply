@@ -15,7 +15,7 @@ def ansible_role_apply(hosts, roles, sudo, show_playbook):
         click.secho(79 * '-', fg='yellow')
         click.secho('#!/usr/bin/env ansible-playbook', fg='yellow')
         click.secho(playbook_content, fg='yellow')
-        click.secho(79 * '-', fg='yellow')
+        click.secho(79 * '-' + '\n', fg='yellow')
 
     with tempfile.NamedTemporaryFile() as tmpf:
         tmpf.write(playbook_content)
