@@ -8,23 +8,20 @@ Example usage
 
 .. code-block:: bash
 
-    $ ansible-role-apply --host=vagrant --role=docker --sudo --show-playbook
-    -------------------------------------------------------------------------------
-    #!/usr/bin/env ansible-playbook
-    ---
-    - hosts:
-        - vagrant
-      roles:
-        - docker
-      sudo: True
-    -------------------------------------------------------------------------------
+    $ ansible-role-apply --help
+    Usage: ansible-role-apply [OPTIONS] ROLE HOSTS
 
+    Options:
+      -s, --sudo / --no-sudo
+      --show-playbook / --no-show-playbook
+      --help                          Show this message and exit.
+
+    $ ansible-role-apply docker vagrant --sudo
+    ...
     PLAY [vagrant] ****************************************************************
 
     GATHERING FACTS ***************************************************************
     ok: [vagrant]
-
     ...
-
     PLAY RECAP ********************************************************************
     vagrant                    : ok=16   changed=1    unreachable=0    failed=0
