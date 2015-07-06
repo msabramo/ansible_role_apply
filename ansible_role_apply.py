@@ -1,15 +1,20 @@
 import os
+import subprocess
 import tempfile
 
 import click
 
 
-@click.command()
+@click.command(context_settings=dict(
+    ignore_unknown_options=True,
+))
 @click.option('--sudo/--no-sudo', '-s')
 @click.option('--show-playbook/--no-show-playbook')
 @click.argument('role')
 @click.argument('hosts')
-def ansible_role_apply(sudo, show_playbook, role, hosts):
+@click.argument('ansible_playbook_args', nargs=-1, type=click.UNPROCESSED)
+def ansible_role_apply(sudo, show_playbook, role, hosts,
+                       ansible_playbook_args):
     playbook_content = get_playbook_content(role, hosts, sudo)
     if show_playbook:
         click.secho(79 * '-', fg='yellow')
@@ -20,7 +25,9 @@ def ansible_role_apply(sudo, show_playbook, role, hosts):
     with tempfile.NamedTemporaryFile() as tmpf:
         tmpf.write(playbook_content)
         tmpf.flush()
-        os.system('ansible-playbook {playbook}'.format(playbook=tmpf.name))
+        cmd = ['ansible-playbook', tmpf.name] + list(ansible_playbook_args)
+        click.secho('Executing command: %s\n' % cmd, fg='yellow')
+        subprocess.call(cmd)
 
 
 def get_playbook_hosts(hosts):
