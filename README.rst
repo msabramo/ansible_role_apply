@@ -36,11 +36,7 @@ Example usage
         - docker
       sudo: True
     -------------------------------------------------------------------------------
-
-    |---> plugin activated: /Users/marca/dev/surveymonkey/smstack/smstack/ansible/plugins/no_hosts_matched_fail.pyc
-    |---> plugin activated: /Users/marca/dev/surveymonkey/smstack/smstack/ansible/plugins/sm_app_role.pyc
-    |---> plugin activated: /Users/marca/dev/surveymonkey/smstack/smstack/ansible/plugins/teamcity_messages.pyc
-
+    ...
     PLAY [vagrant] ****************************************************************
     ...
     PLAY RECAP ********************************************************************
